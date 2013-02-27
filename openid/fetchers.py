@@ -265,7 +265,7 @@ class CurlHTTPFetcher(HTTPFetcher):
             raise HTTPError("No blank line at end of headers: %r" % (line,))
 
         headers = {}
-        for line in lines:
+        for line in [l for l in lines if l not in ['', 'HTTP/1.1 200 OK']]:
             try:
                 name, value = line.split(':', 1)
             except ValueError:
@@ -302,6 +302,9 @@ class CurlHTTPFetcher(HTTPFetcher):
 
         c = pycurl.Curl()
         try:
+            if "http_proxy" in os.environ:
+                c.setopt(c.PROXY, os.environ.get("http_proxy"))
+
             c.setopt(pycurl.NOSIGNAL, 1)
 
             if header_list:
