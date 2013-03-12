@@ -7,6 +7,7 @@ __all__ = ['fetch', 'getDefaultFetcher', 'setDefaultFetcher', 'HTTPResponse',
            'HTTPFetcher', 'createHTTPFetcher', 'HTTPFetchingError',
            'HTTPError']
 
+import os
 import urllib2
 import time
 import cStringIO
